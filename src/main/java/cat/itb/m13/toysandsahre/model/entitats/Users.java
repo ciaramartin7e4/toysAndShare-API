@@ -1,10 +1,9 @@
 package cat.itb.m13.toysandsahre.model.entitats;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 @Data
@@ -21,5 +20,7 @@ public class Users {
     int lastLogin;
     int status;
 
-
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "googleId", referencedColumnName = "googleId")
+    private GoogleUsers googleUsers;
 }
