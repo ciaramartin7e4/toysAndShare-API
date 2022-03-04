@@ -21,6 +21,6 @@ public class Users {
     int status;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "googleId", referencedColumnName = "googleId")
+    @JoinColumn(name = "google_id", referencedColumnName = "googleId")
     private GoogleUsers googleUsers;
 }
