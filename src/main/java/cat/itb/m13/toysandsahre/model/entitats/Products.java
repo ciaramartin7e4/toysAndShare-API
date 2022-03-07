@@ -20,7 +20,7 @@ public class Products {
     @Column(name = "productLocation")
     String productLocation;
     @Column(name = "productDescription")
-    Long productDescription;
+    String productDescription;
     @Column(name = "dateCreated")
     Date dateCreated;
     @Column(name = "imageLink")
@@ -29,7 +29,7 @@ public class Products {
 
 
 
-    public Products(int id, Double price, String productName, String productLocation, Long productDescription, Date dateCreated, String imageLink) {
+    public Products(int id, Double price, String productName, String productLocation, String productDescription, Date dateCreated, String imageLink) {
         super();
         this.id = id;
         this.price = price;
@@ -76,11 +76,11 @@ public class Products {
         this.productLocation = productLocation;
     }
 
-    public Long getProductDescription() {
+    public String getProductDescription() {
         return productDescription;
     }
 
-    public void setProductDescription(Long productDescription) {
+    public void setProductDescription(String productDescription) {
         this.productDescription = productDescription;
     }
 

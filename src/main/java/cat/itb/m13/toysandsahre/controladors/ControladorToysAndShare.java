@@ -54,10 +54,11 @@ public class ControladorToysAndShare {
     }
 
     //PRODUCTS
-    @GetMapping("/products")
-    public ResponseEntity<List<Products>> getLists() {
-        return ResponseEntity.ok(serveisProduct.get());
-    }
+//    @GetMapping("/products")
+//    public ResponseEntity<Products> getLists() {
+//        return serveisProduct.get();
+//    }
+
     @GetMapping("/products/{id}")
     public ResponseEntity<Products> getListsById(@PathVariable int id){
         Products products = serveisProduct.getById(id);
