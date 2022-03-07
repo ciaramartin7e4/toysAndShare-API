@@ -5,9 +5,12 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 @Data
 @Entity
+@Table(name = "users")
 public class Users {
 
     @Id
@@ -16,11 +19,17 @@ public class Users {
     String name;
     String email;
     String password;
+    @Column(name = "dateCreated")
     Date dateCreated;
+    @Column(name = "lastLogin")
     int lastLogin;
     int status;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "googleId", referencedColumnName = "googleId")
-    private GoogleUsers googleUsers;
+
+    @OneToMany
+    private List<Products> products;
+
+//    @OneToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "google_id", referencedColumnName = "google_id")
+//    private GoogleUsers googleUsers;
 }

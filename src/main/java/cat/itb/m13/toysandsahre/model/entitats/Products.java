@@ -1,6 +1,7 @@
 package cat.itb.m13.toysandsahre.model.entitats;
 
 import lombok.Data;
+//import org.graalvm.compiler.lir.LIRInstruction;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -8,16 +9,24 @@ import java.util.Set;
 
 @Data
 @Entity
+@Table(name = "products")
 public class Products {
     @Id
     @GeneratedValue
     int id;
+    @Column(name = "productName")
     String productName;
     Double price;
+    @Column(name = "productLocation")
     String productLocation;
+    @Column(name = "productDescription")
     Long productDescription;
+    @Column(name = "dateCreated")
     Date dateCreated;
+    @Column(name = "imageLink")
     String imageLink;
+
+
 
 
     public Products(int id, Double price, String productName, String productLocation, Long productDescription, Date dateCreated, String imageLink) {

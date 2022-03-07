@@ -6,12 +6,13 @@ import javax.persistence.*;
 
 @Data
 @Entity
+@Table(name = "google_users")
 public class GoogleUsers {
 
     @Id
     @GeneratedValue
     int id;
-    String googleId;
+    String google_id;
     String email;
 
 }
