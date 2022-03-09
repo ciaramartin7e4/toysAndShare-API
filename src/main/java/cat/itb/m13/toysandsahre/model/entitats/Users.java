@@ -17,13 +17,20 @@ public class Users {
     @GeneratedValue
     int id;
     String name;
+    String lastname;
     String email;
     String password;
+    String adress;
+    String city;
+    String country;
+    @Column(name = "postalCode")
+    Long postalCode;
     @Column(name = "dateCreated")
     Date dateCreated;
     @Column(name = "lastLogin")
     int lastLogin;
     int status;
+    String description;
 
 
     @OneToMany
