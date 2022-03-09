@@ -32,6 +32,10 @@ public class Users {
     int status;
     String description;
 
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
+    @Column(name="profileImage", columnDefinition="mediumblob", nullable=true)
+    byte[] profileImage;
 
     @OneToMany
     private List<Products> products;
