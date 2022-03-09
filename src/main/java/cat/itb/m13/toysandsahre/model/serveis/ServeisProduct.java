@@ -14,7 +14,7 @@ public class ServeisProduct {
     private final ProductRepository productRepository;
 
     // llistar tots els productes
-    public List<Products> get(){
+    public List<Products> getProducts(){
         return productRepository.findAll();
     }
 

@@ -10,8 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.security.PrivateKey;
 import java.util.List;
 
 @RestController
@@ -30,6 +28,13 @@ public class ControladorToysAndShare {
 //    }
 
     // USER
+    @GetMapping("/users")
+    public ResponseEntity<List<Users>> consultarUsuari() {
+        List<Users> users = serveisUser.getUsers();
+        if(users == null) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(users);
+    }
+
 
     @GetMapping("/users/{id}")
     public ResponseEntity<Users> consultarUsuari(@PathVariable Integer id) {
@@ -56,7 +61,7 @@ public class ControladorToysAndShare {
     //PRODUCTS
     @GetMapping("/products")
     public ResponseEntity<List<Products>> getLists() {
-        return ResponseEntity.ok(serveisProduct.get());
+        return ResponseEntity.ok(serveisProduct.getProducts());
     }
     @GetMapping("/products/{id}")
     public ResponseEntity<Products> getListsById(@PathVariable int id){
