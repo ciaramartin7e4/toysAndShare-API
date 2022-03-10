@@ -36,6 +36,7 @@ public class ControladorToysAndShare {
     }
 
 
+
     @GetMapping("/users/{id}")
     public ResponseEntity<Users> consultarUsuari(@PathVariable Integer id) {
         Users user = serveisUser.getById(id);
