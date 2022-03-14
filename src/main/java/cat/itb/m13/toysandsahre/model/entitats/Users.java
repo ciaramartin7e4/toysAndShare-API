@@ -31,11 +31,9 @@ public class Users {
     int lastLogin;
     int status;
     String description;
+    @Column(name = "profileImage")
+    String profileImage;
 
-    @Lob
-    @Basic(fetch = FetchType.LAZY)
-    @Column(name="profileImage", columnDefinition="mediumblob", nullable=true)
-    byte[] profileImage;
 
     @OneToMany
     private List<Products> products;
