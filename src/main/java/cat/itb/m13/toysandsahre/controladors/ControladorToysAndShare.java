@@ -1,8 +1,6 @@
 package cat.itb.m13.toysandsahre.controladors;
 
-import cat.itb.m13.toysandsahre.model.entitats.GoogleUsers;
 import cat.itb.m13.toysandsahre.model.entitats.Products;
-import cat.itb.m13.toysandsahre.model.entitats.Status;
 import cat.itb.m13.toysandsahre.model.entitats.Users;
 import cat.itb.m13.toysandsahre.model.repositoris.ServeisGoogle;
 import cat.itb.m13.toysandsahre.model.repositoris.UserRepository;
