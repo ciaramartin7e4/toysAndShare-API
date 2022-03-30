@@ -2,6 +2,7 @@ package cat.itb.m13.toysandsahre.model.serveis;
 
 import cat.itb.m13.toysandsahre.model.entitats.Users;
 import cat.itb.m13.toysandsahre.model.repositoris.UserRepository;
+import jdk.tools.jaotc.ELFMacroAssembler;
 import lombok.RequiredArgsConstructor;
 import org.apache.catalina.User;
 import org.springframework.stereotype.Service;
@@ -22,7 +23,9 @@ public class ServeisUser {
     public Users getById( int id){
         return userRepository.findById(id).orElse(null);
     }
-
+    public Users getByEmailPassword( String email, String password){
+        return userRepository.findByEmailPassword(email, password).orElse(null);
+    }
     // afegeix un usuari
     public Users set(Users it){
         return userRepository.save(it);

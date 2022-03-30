@@ -2,14 +2,18 @@ package cat.itb.m13.toysandsahre.controladors;
 
 import cat.itb.m13.toysandsahre.model.entitats.GoogleUsers;
 import cat.itb.m13.toysandsahre.model.entitats.Products;
+import cat.itb.m13.toysandsahre.model.entitats.Status;
 import cat.itb.m13.toysandsahre.model.entitats.Users;
 import cat.itb.m13.toysandsahre.model.repositoris.ServeisGoogle;
+import cat.itb.m13.toysandsahre.model.repositoris.UserRepository;
 import cat.itb.m13.toysandsahre.model.serveis.ServeisProduct;
 import cat.itb.m13.toysandsahre.model.serveis.ServeisUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -18,6 +22,7 @@ public class ControladorToysAndShare {
     private final ServeisUser serveisUser;
     private final ServeisProduct serveisProduct;
     private final ServeisGoogle serveisGoogle;
+    UserRepository userRepository;
 
 
     //Google USER
@@ -35,11 +40,56 @@ public class ControladorToysAndShare {
         return ResponseEntity.ok(users);
     }
 
-
+//    @PostMapping("/users/register")
+//    public Status registerUser(@Valid @RequestBody Users newUser) {
+//        List<Users> users = userRepository.findAll();
+//        System.out.println("New user: " + newUser.toString());
+//        for (Users user : users) {
+//            System.out.println("Registered user: " + newUser.toString());
+//            if (user.equals(newUser)) {
+//                System.out.println("User Already exists!");
+//                return Status.USER_ALREADY_EXISTS;
+//            }
+//        }
+//        userRepository.save(newUser);
+//        return Status.SUCCESS;
+//    }
+//
+//    @PostMapping("/users/login")
+//    public Status loginUser(@Valid @RequestBody Users user) {
+//        List<Users> users = userRepository.findAll();
+//        for (Users other : users) {
+//            if (other.equals(user)) {
+//                user.setStatus(1);
+//                userRepository.save(user);
+//                return Status.SUCCESS;
+//            }
+//        }
+//        return Status.FAILURE;
+//    }
+//    @PostMapping("/users/logout")
+//    public Status logUserOut(@Valid @RequestBody Users user) {
+//        List<Users> users = userRepository.findAll();
+//        for (Users other : users) {
+//            if (other.equals(user)) {
+//                user.setStatus(0);
+//                userRepository.save(user);
+//                return Status.SUCCESS;
+//            }
+//        }
+//        return Status.FAILURE;
+//    }
 
     @GetMapping("/users/{id}")
     public ResponseEntity<Users> consultarUsuari(@PathVariable Integer id) {
         Users user = serveisUser.getById(id);
+        if (user == null) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(user);
+    }
+
+    @GetMapping("/users/login/{email}")
+    public ResponseEntity<Users> consultarUsuariByEmailPassword(@PathVariable String email, String password) {
+        Users user = serveisUser.getByEmailPassword(email, password);
         if (user == null) return ResponseEntity.notFound().build();
         return ResponseEntity.ok(user);
     }
