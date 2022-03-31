@@ -1,7 +1,7 @@
 package cat.itb.m13.toysandsahre.controladors;
 
 import cat.itb.m13.toysandsahre.model.entitats.Products;
-import cat.itb.m13.toysandsahre.model.entitats.Users;
+import cat.itb.m13.toysandsahre.model.entitats.Usuaris;
 import cat.itb.m13.toysandsahre.model.repositoris.ServeisGoogle;
 import cat.itb.m13.toysandsahre.model.repositoris.UserRepository;
 import cat.itb.m13.toysandsahre.model.serveis.ServeisProduct;
@@ -11,7 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -32,78 +31,38 @@ public class ControladorToysAndShare {
 
     // USER
     @GetMapping("/users")
-    public ResponseEntity<List<Users>> consultarUsuari() {
-        List<Users> users = serveisUser.getUsers();
+    public ResponseEntity<List<Usuaris>> consultarUsuari() {
+        List<Usuaris> users = serveisUser.getUsers();
         if(users == null) return ResponseEntity.notFound().build();
         return ResponseEntity.ok(users);
     }
 
-//    @PostMapping("/users/register")
-//    public Status registerUser(@Valid @RequestBody Users newUser) {
-//        List<Users> users = userRepository.findAll();
-//        System.out.println("New user: " + newUser.toString());
-//        for (Users user : users) {
-//            System.out.println("Registered user: " + newUser.toString());
-//            if (user.equals(newUser)) {
-//                System.out.println("User Already exists!");
-//                return Status.USER_ALREADY_EXISTS;
-//            }
-//        }
-//        userRepository.save(newUser);
-//        return Status.SUCCESS;
-//    }
-//
-//    @PostMapping("/users/login")
-//    public Status loginUser(@Valid @RequestBody Users user) {
-//        List<Users> users = userRepository.findAll();
-//        for (Users other : users) {
-//            if (other.equals(user)) {
-//                user.setStatus(1);
-//                userRepository.save(user);
-//                return Status.SUCCESS;
-//            }
-//        }
-//        return Status.FAILURE;
-//    }
-//    @PostMapping("/users/logout")
-//    public Status logUserOut(@Valid @RequestBody Users user) {
-//        List<Users> users = userRepository.findAll();
-//        for (Users other : users) {
-//            if (other.equals(user)) {
-//                user.setStatus(0);
-//                userRepository.save(user);
-//                return Status.SUCCESS;
-//            }
-//        }
-//        return Status.FAILURE;
-//    }
-
     @GetMapping("/users/{id}")
-    public ResponseEntity<Users> consultarUsuari(@PathVariable Integer id) {
-        Users user = serveisUser.getById(id);
+    public ResponseEntity<Usuaris> consultarUsuari(@PathVariable Integer id) {
+        Usuaris user = serveisUser.getById(id);
         if (user == null) return ResponseEntity.notFound().build();
         return ResponseEntity.ok(user);
     }
 
     @GetMapping("/users/login/{email}")
-    public ResponseEntity<Users> consultarUsuariByEmailPassword(@PathVariable String email, String password) {
-        Users user = serveisUser.getByEmailPassword(email, password);
+    public ResponseEntity<Usuaris> consultarUsuariByEmailPassword(@PathVariable String email, String password) {
+        Usuaris user = serveisUser.getByEmailPassword(email, password);
         if (user == null) return ResponseEntity.notFound().build();
         return ResponseEntity.ok(user);
     }
 
     @PostMapping("/users")
-    public ResponseEntity<Users> postUser(@RequestBody Users user) {
-        Users u = serveisUser.set(user);
-        return new ResponseEntity<Users>(u, HttpStatus.CREATED);
+    public ResponseEntity<Usuaris> postUser(@RequestBody Usuaris user) {
+        Usuaris u = serveisUser.set(user);
+        return new ResponseEntity<Usuaris>(u, HttpStatus.CREATED);
     }
     @PutMapping("/users")
-    public ResponseEntity<Users> updateUser(@RequestBody Users user) {
-        Users u = serveisUser.set(user);
+    public ResponseEntity<Usuaris> updateUser(@RequestBody Usuaris user) {
+        Usuaris u = serveisUser.set(user);
         return ResponseEntity.ok(u);
     }
     @DeleteMapping("/users/{id}")
-    public Users deleteUser(@PathVariable int id) {
+    public Usuaris deleteUser(@PathVariable int id) {
         return serveisUser.delete(id);
     }
 
