@@ -14,13 +14,22 @@ public class Usuaris {
     @Id
     @GeneratedValue
     int id;
+    @Column(name = "name")
     String name;
+    @Column(name = "lastname")
     String lastname;
+    @Column(name = "email")
     String email;
+    @Column(name = "password")
     String password;
-    String adress;
+    @Column(name = "address")
+    String address;
+    @Column(name = "city")
     String city;
+    @Column(name = "country")
     String country;
+    @Column(name = "phone")
+    String phone;
     @Column(name = "postalCode")
     Long postalCode;
     @Column(name = "dateCreated")
@@ -32,11 +41,38 @@ public class Usuaris {
     @Column(name = "profileImage")
     String profileImage;
 
-
     @OneToMany
     private List<Products> products;
 
-//    @OneToOne(cascade = CascadeType.ALL)
+    public Usuaris(int id, String name, String lastname, String email,
+                   String password, String address, String city,
+                   String country, String phone, Long postalCode,
+                   Date dateCreated, int lastLogin, int status,
+                   String description, String profileImage,
+                   List<Products> products) {
+        this.id = id;
+        this.name = name;
+        this.lastname = lastname;
+        this.email = email;
+        this.password = password;
+        this.address = address;
+        this.city = city;
+        this.country = country;
+        this.phone = phone;
+        this.postalCode = postalCode;
+        this.dateCreated = dateCreated;
+        this.lastLogin = lastLogin;
+        this.status = status;
+        this.description = description;
+        this.profileImage = profileImage;
+        this.products = products;
+    }
+
+    public Usuaris() {
+
+    }
+
+    //    @OneToOne(cascade = CascadeType.ALL)
 //    @JoinColumn(name = "google_id", referencedColumnName = "google_id")
 //    private GoogleUsers googleUsers;
 }
