@@ -1,15 +1,17 @@
 package cat.itb.m13.toysandsahre.model.entitats;
 
 import lombok.Data;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Data
 @Entity
 @Table(name = "usuaris")
-public class Usuaris {
+public class Usuaris implements UserDetails {
 
     @Id
     @GeneratedValue
@@ -70,6 +72,40 @@ public class Usuaris {
 
     public Usuaris() {
 
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        Set<SimpleGrantedAuthority> roles = new HashSet<>();
+        roles.add(new SimpleGrantedAuthority("ROLE_USER"));
+        //l'altre rol seria "ROLE_ADMIN", per exemple
+        return roles;
+
+    }
+
+    @Override
+    public String getUsername() {
+        return null;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 
     //    @OneToOne(cascade = CascadeType.ALL)

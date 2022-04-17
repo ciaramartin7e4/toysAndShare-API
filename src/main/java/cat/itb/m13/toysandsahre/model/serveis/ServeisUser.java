@@ -3,6 +3,7 @@ package cat.itb.m13.toysandsahre.model.serveis;
 import cat.itb.m13.toysandsahre.model.entitats.Usuaris;
 import cat.itb.m13.toysandsahre.model.repositoris.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,6 +12,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ServeisUser {
     private final UserRepository userRepository;
+    private final PasswordEncoder xifrat;
+
+    public Usuaris consultarPerUsername(String username) {
+        return userRepository.findByUserName(username).orElse(null);
+    }
+
 
     //Llista tots els usuaris
     public List<Usuaris> getUsers(){

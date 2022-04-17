@@ -2,7 +2,7 @@ package cat.itb.m13.toysandsahre.controladors;
 
 import cat.itb.m13.toysandsahre.model.entitats.Products;
 import cat.itb.m13.toysandsahre.model.entitats.Usuaris;
-import cat.itb.m13.toysandsahre.model.repositoris.ServeisGoogle;
+//import cat.itb.m13.toysandsahre.model.repositoris.ServeisGoogle;
 import cat.itb.m13.toysandsahre.model.repositoris.UserRepository;
 import cat.itb.m13.toysandsahre.model.serveis.ServeisProduct;
 import cat.itb.m13.toysandsahre.model.serveis.ServeisUser;
@@ -18,7 +18,7 @@ import java.util.List;
 public class ControladorToysAndShare {
     private final ServeisUser serveisUser;
     private final ServeisProduct serveisProduct;
-    private final ServeisGoogle serveisGoogle;
+//    private final ServeisGoogle serveisGoogle;
     UserRepository userRepository;
 
 
