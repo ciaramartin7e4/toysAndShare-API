@@ -4,18 +4,28 @@ import cat.itb.m13.toysandsahre.model.entitats.Usuaris;
 import cat.itb.m13.toysandsahre.model.repositoris.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Component
 public class ServeisUser {
     private final UserRepository userRepository;
     private final PasswordEncoder xifrat;
 
     public Usuaris consultarPerUsername(String username) {
-        return userRepository.findByUserName(username).orElse(null);
+        return userRepository.findByUsername(username).orElse(null);
+    }
+
+    public Usuaris crearNouUsuari(Usuaris nouUsuari) {
+        //falta controlar que els 2 passwords del client coincideixen
+        //passar un UsuariCreacioDTO
+        nouUsuari.setPassword(xifrat.encode(nouUsuari.getPassword()));
+        userRepository.save(nouUsuari);
+        return nouUsuari;
     }
 
 
