@@ -98,5 +98,9 @@ public class ControladorToysAndShare {
         List<Products> lista = serveisProduct.getListByUserId(id);
         return ResponseEntity.ok(lista);
     }
-
+//    @GetMapping("/user/product/{id}")
+//    public ResponseEntity<Usuaris> getUserByProductId(@PathVariable int id){
+//        Usuaris user = serveisUser.getByProduct(id);
+//        return ResponseEntity.ok(user);
+//    }
 }

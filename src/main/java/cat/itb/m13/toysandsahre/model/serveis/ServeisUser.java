@@ -53,4 +53,8 @@ public class ServeisUser {
         }
         return user;
     }
+
+//    public Usuaris getByProduct(int id) {
+//        return userRepository.findByProductId(id);
+//    }
 }
