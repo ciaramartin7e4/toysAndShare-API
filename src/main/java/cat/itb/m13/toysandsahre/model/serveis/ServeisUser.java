@@ -1,5 +1,6 @@
 package cat.itb.m13.toysandsahre.model.serveis;
 
+import cat.itb.m13.toysandsahre.model.entitats.Products;
 import cat.itb.m13.toysandsahre.model.entitats.Usuaris;
 import cat.itb.m13.toysandsahre.model.repositoris.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -54,7 +55,7 @@ public class ServeisUser {
         return user;
     }
 
-//    public Usuaris getByProduct(int id) {
-//        return userRepository.findByProductId(id);
-//    }
+    public Usuaris getByProduct(Products product) {
+        return userRepository.findByProductId(product);
+    }
 }

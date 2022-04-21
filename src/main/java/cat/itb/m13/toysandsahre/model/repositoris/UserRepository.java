@@ -1,5 +1,6 @@
 package cat.itb.m13.toysandsahre.model.repositoris;
 
+import cat.itb.m13.toysandsahre.model.entitats.Products;
 import cat.itb.m13.toysandsahre.model.entitats.Usuaris;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -15,7 +16,6 @@ public interface UserRepository extends JpaRepository<Usuaris, Integer> {
 
     @Query(value = "SELECT u FROM Usuaris u WHERE u.email = :email")
     Optional<Usuaris> findByUsername(String email);
-//    @Query("SELECT u from Usuaris u WHERE u.products")
-//    Usuaris findByProductId(int id);
-//
+    @Query("SELECT u from Usuaris u, Products p WHERE p.donator_id = u.id")
+    Usuaris findByProductId(Products product);
 }
