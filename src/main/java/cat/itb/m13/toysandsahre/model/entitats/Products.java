@@ -29,6 +29,7 @@ public class Products {
     int donator_id;
 
     public Products(int id, String productName, Double price, String productLocation, String productDescription, Date dateCreated, String imageLink, int donator_id) {
+        super();
         this.id = id;
         this.productName = productName;
         this.price = price;
@@ -40,7 +41,7 @@ public class Products {
     }
 
     public Products() {
-
+        super();
     }
 
     //    Getters
