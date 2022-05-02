@@ -111,4 +111,26 @@ public class Usuaris implements UserDetails {
     //    @OneToOne(cascade = CascadeType.ALL)
 //    @JoinColumn(name = "google_id", referencedColumnName = "google_id")
 //    private GoogleUsers googleUsers;
+
+//    @Override
+//    public String toString() {
+//        return "Usuaris{" +
+//                "id=" + id +
+//                ", name='" + name + '\'' +
+//                ", lastname='" + lastname + '\'' +
+//                ", email='" + email + '\'' +
+//                ", password='" + password + '\'' +
+//                ", address='" + address + '\'' +
+//                ", city='" + city + '\'' +
+//                ", country='" + country + '\'' +
+//                ", phone='" + phone + '\'' +
+//                ", postalCode=" + postalCode +
+//                ", dateCreated=" + dateCreated +
+//                ", lastLogin=" + lastLogin +
+//                ", status=" + status +
+//                ", description='" + description + '\'' +
+//                ", profileImage='" + profileImage + '\'' +
+//                ", products=" + products +
+//                '}';
+//    }
 }

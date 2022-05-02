@@ -23,14 +23,15 @@ public class ControladorsRegisterNewUser {
 
     @GetMapping("/userDetail")
     public UsuariConsultaDTO consultaQuiEts(@AuthenticationPrincipal Usuaris usu) {
-        return new UsuariConsultaDTO(usu.getName(), usu.getLastname(), usu.getEmail(), usu.getAddress(), usu.getCity(), usu.getCountry(), usu.getPhone(), usu.getPostalCode(), usu.getDateCreated());
+//        System.out.println("Este es mi usuario "+ usu.toString());
+        return new UsuariConsultaDTO(usu.getName(), usu.getLastname(), usu.getEmail(), usu.getAddress(), usu.getCity(), usu.getCountry(), usu.getPhone(), usu.getPostalCode(), usu.getDateCreated(), usu.getDescription(), usu.getId(), usu.getProfileImage());
     }
 
     @PostMapping("/usuaris")
     public ResponseEntity<?> nouUsuari(@RequestBody Usuaris nouUsuari) {
         try {
             Usuaris res = serveisUser.crearNouUsuari(nouUsuari);
-            UsuariConsultaDTO usu = new UsuariConsultaDTO(res.getName(), res.getLastname(), res.getEmail(), res.getAddress(), res.getCity(), res.getCountry(), res.getPhone(), res.getPostalCode(), res.getDateCreated());
+            UsuariConsultaDTO usu = new UsuariConsultaDTO(res.getName(), res.getLastname(), res.getEmail(), res.getAddress(), res.getCity(), res.getCountry(), res.getPhone(), res.getPostalCode(), res.getDateCreated(), res.getDescription(), res.getId(), res.getProfileImage());
             return new ResponseEntity<UsuariConsultaDTO>(usu, HttpStatus.CREATED);
         } catch (DataIntegrityViolationException ex) {
             //per si intentem afegir 2 usuaris amb el mateix username, saltarà excepció
