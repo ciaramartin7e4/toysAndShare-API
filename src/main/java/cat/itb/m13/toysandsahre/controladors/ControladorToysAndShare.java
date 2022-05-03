@@ -10,9 +10,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.thymeleaf.util.DateUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
@@ -85,13 +88,17 @@ public class ControladorToysAndShare {
     }
     @PostMapping("/products")
     public ResponseEntity<Products> postLista(@RequestBody Products products) throws ParseException {
-        String sDate1 = String.valueOf(products.getDateCreated());
-        Date date1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX").parse(sDate1);
-        System.out.println(sDate1+"\t"+date1);
-        Products products1 = new Products(products.getId(), products.getProductName(), products.getPrice(), products.getProductLocation(), products.getProductDescription(), date1, products.getImageLink(), products.getDonator_id());
+        System.out.println(products);
+
+        LocalDateTime dateTime = LocalDateTime.now();
+        Date date = java.sql.Timestamp.valueOf(dateTime);
+
+        Products products1 = new Products(products.getId(), products.getProductName(), products.getPrice(), products.getProductLocation(), products.getProductDescription(), date, products.getImageLink(), products.getDonator_id());
+        System.out.println(products1);
         Products p = serveisProduct.set(products1);
         return new ResponseEntity<Products>(p, HttpStatus.CREATED);
     }
+
     @PutMapping("/products")
     public ResponseEntity<Products> updateLista(@RequestBody Products lista) {
         Products p = serveisProduct.set(lista);
