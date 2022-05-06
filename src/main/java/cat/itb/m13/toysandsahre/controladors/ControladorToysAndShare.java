@@ -13,14 +13,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.thymeleaf.util.DateUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -80,12 +79,24 @@ public class ControladorToysAndShare {
     public ResponseEntity<List<Products>> getLists() {
         return ResponseEntity.ok(serveisProduct.getProducts());
     }
+
     @GetMapping("/products/{id}")
-    public ResponseEntity<Products> getListsById(@PathVariable int id){
-        Products products = serveisProduct.getById(id);
-        if(products == null) return ResponseEntity.notFound().build();
-        return ResponseEntity.ok(products);
+//    public ResponseEntity<Products> getListsById(@PathVariable int id){
+//       Products products = serveisProduct.getById(id);
+//       if(products == null) return ResponseEntity.notFound().build();
+//       return ResponseEntity.ok(products);
+//       Products products = productRepository.findById(id)
+//               .orElseThrow(() -> new ResourceNotFoundException("Not found Products with id = " + id));
+    public ResponseEntity<Products> getProductsById(@PathVariable(value = "id") int id) {
+        Products prod = productRepository.findById(id).map(product -> {
+            product.setUsuaris(product.getUsuaris());
+            Products p1 = new Products(product.getId(), product.getProductName(), product.getPrice(), product.getProductLocation(),
+                    product.getProductDescription(), product.getDateCreated(), product.getImageLink(), product.getUsuaris());
+            return p1;
+        }).orElseThrow(() -> new ResourceNotFoundException("Not found Product with id = " + id));
+        return new ResponseEntity<>(prod, HttpStatus.CREATED);
     }
+//    }
 
     @PostMapping("/users/{id}/products")
     public ResponseEntity<Products> createProducts(@PathVariable(value = "id") int id, @RequestBody Products commentRequest) {
@@ -113,7 +124,7 @@ public class ControladorToysAndShare {
     }
 
     @DeleteMapping("/users/{id}/products")
-    public ResponseEntity<List<Products>> deleteAllCommentsOfTutorial(@PathVariable(value = "id") int id) {
+    public ResponseEntity<List<Products>> deleteAllProductssOfTutorial(@PathVariable(value = "id") int id) {
         if (!userRepository.existsById(id)) {
             throw new ResourceNotFoundException("Not found Usuari with id = " + id);
         }
