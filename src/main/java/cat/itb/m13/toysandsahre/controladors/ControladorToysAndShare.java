@@ -33,14 +33,6 @@ public class ControladorToysAndShare {
     @Autowired
     ProductRepository productRepository;
 
-
-    //Google USER
-
-//    @GetMapping ("/gusers")
-//    public List<GoogleUsers> getGoogleUsers(){
-//        return serveisGoogle.get();
-//    }
-
     // USER
     @GetMapping("/users")
     public ResponseEntity<List<Usuaris>> consultarUsuari() {
@@ -71,11 +63,13 @@ public class ControladorToysAndShare {
         Usuaris u = serveisUser.set(newUser);
         return new ResponseEntity<Usuaris>(u, HttpStatus.CREATED);
     }
+
     @PutMapping("/users")
     public ResponseEntity<Usuaris> updateUser(@RequestBody Usuaris user) {
         Usuaris u = serveisUser.set(user);
         return ResponseEntity.ok(u);
     }
+
     @DeleteMapping("/users/{id}")
     public Usuaris deleteUser(@PathVariable int id) {
         return serveisUser.delete(id);
@@ -91,28 +85,6 @@ public class ControladorToysAndShare {
         Products products = serveisProduct.getById(id);
         if(products == null) return ResponseEntity.notFound().build();
         return ResponseEntity.ok(products);
-    }
-//    @GetMapping("/users/{id}/products")
-//    public ResponseEntity<Products> getListsByIdUser(@PathVariable int id){
-//        Products products = serveisProduct.getById(id);
-//        if(products == null) return ResponseEntity.notFound().build();
-//        return ResponseEntity.ok(products);
-//    }
-
-    @PostMapping("/products")
-    public ResponseEntity<Products> postLista(@RequestBody Products products) throws ParseException {
-
-        System.out.println(userRepository.findAll());
-
-        System.out.println(products);
-
-        LocalDateTime dateTime = LocalDateTime.now();
-        Date date = java.sql.Timestamp.valueOf(dateTime);
-
-        Products products1 = new Products(products.getId(), products.getProductName(), products.getPrice(), products.getProductLocation(), products.getProductDescription(), date, products.getImageLink(), products.getUsuaris());
-        System.out.println(products1);
-        Products p = serveisProduct.set(products1);
-        return new ResponseEntity<>(p, HttpStatus.CREATED);
     }
 
     @PostMapping("/users/{id}/products")
@@ -140,16 +112,6 @@ public class ControladorToysAndShare {
         return new ResponseEntity<>(id, HttpStatus.NO_CONTENT);
     }
 
-//    @GetMapping("/products/user/{id}")
-//    public ResponseEntity<List<Products>> getListByUserId(@PathVariable int id) {
-//        List<Products> lista = serveisProduct.getListByUserId(id);
-//        return ResponseEntity.ok(lista);
-//    }
-//    @GetMapping("/user/product/{product}")
-//    public ResponseEntity<Usuaris> getUserByProduct(@PathVariable Products product){
-//        Usuaris user = serveisUser.getByProduct(product);
-//        return ResponseEntity.ok(user);
-//    }
     @DeleteMapping("/users/{id}/products")
     public ResponseEntity<List<Products>> deleteAllCommentsOfTutorial(@PathVariable(value = "id") int id) {
         if (!userRepository.existsById(id)) {

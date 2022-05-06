@@ -29,8 +29,7 @@ public class Products {
     Date dateCreated;
     @Column(name = "image_link")
     String imageLink;
-//    @Column(name="donator_id")
-//    int donator_id;
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "usuari_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -47,17 +46,7 @@ public class Products {
         this.imageLink = imageLink;
         this.usuaris = usuaris;
     }
-    //    public Products(int id, String productName, Double price, String productLocation, String productDescription, Date dateCreated, String imageLink, int donator_id) {
-//        super();
-//        this.id = id;
-//        this.productName = productName;
-//        this.price = price;
-//        this.productLocation = productLocation;
-//        this.productDescription = productDescription;
-//        this.dateCreated = dateCreated;
-//        this.imageLink = imageLink;
-//        this.donator_id = donator_id;
-//    }
+
 
     public Products() {
         super();
@@ -92,10 +81,6 @@ public class Products {
         return imageLink;
     }
 
-//    public int getDonator_id() {
-//        return donator_id;
-//    }
-
     public Usuaris getUsuaris() {
         return usuaris;
     }
@@ -128,10 +113,6 @@ public class Products {
     public void setImageLink(String imageLink) {
         this.imageLink = imageLink;
     }
-
-//    public void setDonator_id(int donator_id) {
-//        this.donator_id = donator_id;
-//    }
 
     public void setUsuaris(Usuaris usuaris) {
         this.usuaris = usuaris;

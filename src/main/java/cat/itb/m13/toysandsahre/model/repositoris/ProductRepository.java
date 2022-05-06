@@ -10,7 +10,6 @@ import java.util.List;
 public interface ProductRepository extends JpaRepository<Products, Integer> {
     List<Products> findByUsuarisId(int id);
 
-
     @Transactional
     void deleteByUsuarisId(int id);
 }
