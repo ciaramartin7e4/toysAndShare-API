@@ -1,6 +1,9 @@
 package cat.itb.m13.toysandsahre.model.entitats;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 //import org.graalvm.compiler.lir.LIRInstruction;
 
 import javax.persistence.*;
@@ -25,11 +28,15 @@ public class Products {
     Date dateCreated;
     @Column(name = "image_link")
     String imageLink;
-    @Column(name="donator_id")
-    int donator_id;
+//    @Column(name="donator_id")
+//    int donator_id;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "usuari_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
+    private Usuaris usuaris;
 
-    public Products(int id, String productName, Double price, String productLocation, String productDescription, Date dateCreated, String imageLink, int donator_id) {
-        super();
+    public Products(int id, String productName, Double price, String productLocation, String productDescription, Date dateCreated, String imageLink, Usuaris usuaris) {
         this.id = id;
         this.productName = productName;
         this.price = price;
@@ -37,8 +44,19 @@ public class Products {
         this.productDescription = productDescription;
         this.dateCreated = dateCreated;
         this.imageLink = imageLink;
-        this.donator_id = donator_id;
+        this.usuaris = usuaris;
     }
+    //    public Products(int id, String productName, Double price, String productLocation, String productDescription, Date dateCreated, String imageLink, int donator_id) {
+//        super();
+//        this.id = id;
+//        this.productName = productName;
+//        this.price = price;
+//        this.productLocation = productLocation;
+//        this.productDescription = productDescription;
+//        this.dateCreated = dateCreated;
+//        this.imageLink = imageLink;
+//        this.donator_id = donator_id;
+//    }
 
     public Products() {
         super();
@@ -73,11 +91,15 @@ public class Products {
         return imageLink;
     }
 
-    public int getDonator_id() {
-        return donator_id;
+//    public int getDonator_id() {
+//        return donator_id;
+//    }
+
+    public Usuaris getUsuaris() {
+        return usuaris;
     }
 
-//    Setters
+    //    Setters
     public void setId(int id) {
         this.id = id;
     }
@@ -106,7 +128,11 @@ public class Products {
         this.imageLink = imageLink;
     }
 
-    public void setDonator_id(int donator_id) {
-        this.donator_id = donator_id;
+//    public void setDonator_id(int donator_id) {
+//        this.donator_id = donator_id;
+//    }
+
+    public void setUsuaris(Usuaris usuaris) {
+        this.usuaris = usuaris;
     }
 }

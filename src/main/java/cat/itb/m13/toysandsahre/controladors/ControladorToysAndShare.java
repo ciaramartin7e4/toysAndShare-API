@@ -3,10 +3,13 @@ package cat.itb.m13.toysandsahre.controladors;
 import cat.itb.m13.toysandsahre.model.entitats.Products;
 import cat.itb.m13.toysandsahre.model.entitats.Usuaris;
 //import cat.itb.m13.toysandsahre.model.repositoris.ServeisGoogle;
+import cat.itb.m13.toysandsahre.model.repositoris.ProductRepository;
 import cat.itb.m13.toysandsahre.model.repositoris.UserRepository;
 import cat.itb.m13.toysandsahre.model.serveis.ServeisProduct;
 import cat.itb.m13.toysandsahre.model.serveis.ServeisUser;
 import lombok.RequiredArgsConstructor;
+import org.apache.velocity.exception.ResourceNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +28,10 @@ public class ControladorToysAndShare {
     private final ServeisUser serveisUser;
     private final ServeisProduct serveisProduct;
 //    private final ServeisGoogle serveisGoogle;
+    @Autowired
     UserRepository userRepository;
+    @Autowired
+    ProductRepository productRepository;
 
 
     //Google USER
@@ -61,7 +67,7 @@ public class ControladorToysAndShare {
     public ResponseEntity<Usuaris> postUser(@RequestBody Usuaris user) throws ParseException {
         String sDate1 = String.valueOf(user.getDateCreated());
         Date date1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX").parse(sDate1);
-        Usuaris newUser = new Usuaris(user.getId(), user.getName(), user.getLastname(), user.getEmail(), user.getPassword(), user.getAddress(), user.getCity(), user.getCountry(), user.getPhone(), user.getPostalCode(),date1, user.getLastLogin(), user.getStatus(), user.getDescription(), user.getProfileImage(), user.getProducts());
+        Usuaris newUser = new Usuaris(user.getId(), user.getName(), user.getLastname(), user.getEmail(), user.getPassword(), user.getAddress(), user.getCity(), user.getCountry(), user.getPhone(), user.getPostalCode(),date1, user.getLastLogin(), user.getStatus(), user.getDescription(), user.getProfileImage());
         Usuaris u = serveisUser.set(newUser);
         return new ResponseEntity<Usuaris>(u, HttpStatus.CREATED);
     }
@@ -86,6 +92,13 @@ public class ControladorToysAndShare {
         if(products == null) return ResponseEntity.notFound().build();
         return ResponseEntity.ok(products);
     }
+//    @GetMapping("/users/{id}/products")
+//    public ResponseEntity<Products> getListsByIdUser(@PathVariable int id){
+//        Products products = serveisProduct.getById(id);
+//        if(products == null) return ResponseEntity.notFound().build();
+//        return ResponseEntity.ok(products);
+//    }
+
     @PostMapping("/products")
     public ResponseEntity<Products> postLista(@RequestBody Products products) throws ParseException {
         System.out.println(products);
@@ -93,7 +106,7 @@ public class ControladorToysAndShare {
         LocalDateTime dateTime = LocalDateTime.now();
         Date date = java.sql.Timestamp.valueOf(dateTime);
 
-        Products products1 = new Products(products.getId(), products.getProductName(), products.getPrice(), products.getProductLocation(), products.getProductDescription(), date, products.getImageLink(), products.getDonator_id());
+        Products products1 = new Products(products.getId(), products.getProductName(), products.getPrice(), products.getProductLocation(), products.getProductDescription(), date, products.getImageLink(), products.getUsuaris());
         System.out.println(products1);
         Products p = serveisProduct.set(products1);
         return new ResponseEntity<Products>(p, HttpStatus.CREATED);
@@ -110,14 +123,31 @@ public class ControladorToysAndShare {
         return new ResponseEntity<>(id, HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping("/products/user/{id}")
-    public ResponseEntity<List<Products>> getListByUserId(@PathVariable int id) {
-        List<Products> lista = serveisProduct.getListByUserId(id);
-        return ResponseEntity.ok(lista);
+//    @GetMapping("/products/user/{id}")
+//    public ResponseEntity<List<Products>> getListByUserId(@PathVariable int id) {
+//        List<Products> lista = serveisProduct.getListByUserId(id);
+//        return ResponseEntity.ok(lista);
+//    }
+//    @GetMapping("/user/product/{product}")
+//    public ResponseEntity<Usuaris> getUserByProduct(@PathVariable Products product){
+//        Usuaris user = serveisUser.getByProduct(product);
+//        return ResponseEntity.ok(user);
+//    }
+    @DeleteMapping("/users/{id}/products")
+    public ResponseEntity<List<Products>> deleteAllCommentsOfTutorial(@PathVariable(value = "id") int id) {
+        if (!userRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Not found Usuari with id = " + id);
+        }
+        productRepository.deleteByUsuarisId(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-    @GetMapping("/user/product/{product}")
-    public ResponseEntity<Usuaris> getUserByProduct(@PathVariable Products product){
-        Usuaris user = serveisUser.getByProduct(product);
-        return ResponseEntity.ok(user);
+
+    @GetMapping("/users/{id}/products")
+    public ResponseEntity<List<Products>> getAllProductsByUsuariId(@PathVariable(value = "id") int id) {
+        if (!userRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Not found Usuari with id = " + id);
+        }
+        List<Products> products = productRepository.findByUsuarisId(id);
+        return new ResponseEntity<>(products, HttpStatus.OK);
     }
 }

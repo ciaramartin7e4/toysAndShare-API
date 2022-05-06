@@ -43,15 +43,35 @@ public class Usuaris implements UserDetails {
     @Column(name = "profileImage")
     String profileImage;
 
-    @OneToMany
-    private List<Products> products;
+//    @OneToMany
+//    private List<Products> products;
 
-    public Usuaris(int id, String name, String lastname, String email,
-                   String password, String address, String city,
-                   String country, String phone, Long postalCode,
-                   Date dateCreated, int lastLogin, int status,
-                   String description, String profileImage,
-                   List<Products> products) {
+//    public Usuaris(int id, String name, String lastname, String email,
+//                   String password, String address, String city,
+//                   String country, String phone, Long postalCode,
+//                   Date dateCreated, int lastLogin, int status,
+//                   String description, String profileImage,
+//                   List<Products> products) {
+//        this.id = id;
+//        this.name = name;
+//        this.lastname = lastname;
+//        this.email = email;
+//        this.password = password;
+//        this.address = address;
+//        this.city = city;
+//        this.country = country;
+//        this.phone = phone;
+//        this.postalCode = postalCode;
+//        this.dateCreated = dateCreated;
+//        this.lastLogin = lastLogin;
+//        this.status = status;
+//        this.description = description;
+//        this.profileImage = profileImage;
+//        this.products = products;
+//    }
+
+
+    public Usuaris(int id, String name, String lastname, String email, String password, String address, String city, String country, String phone, Long postalCode, Date dateCreated, int lastLogin, int status, String description, String profileImage) {
         this.id = id;
         this.name = name;
         this.lastname = lastname;
@@ -67,7 +87,6 @@ public class Usuaris implements UserDetails {
         this.status = status;
         this.description = description;
         this.profileImage = profileImage;
-        this.products = products;
     }
 
     public Usuaris() {

@@ -39,6 +39,6 @@ public class ServeisProduct {
 
     // consultar producto por id usuari
     public List<Products> getListByUserId(int id){
-        return productRepository.findProductsByUserId(id);
+        return productRepository.findByUsuarisId(id);
     }
 }
