@@ -1,5 +1,6 @@
 package cat.itb.m13.toysandsahre.model.entitats;
 
+import cat.itb.m13.toysandsahre.model.repositoris.UserRepository;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.hibernate.annotations.OnDelete;

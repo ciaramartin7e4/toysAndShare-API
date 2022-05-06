@@ -101,6 +101,9 @@ public class ControladorToysAndShare {
 
     @PostMapping("/products")
     public ResponseEntity<Products> postLista(@RequestBody Products products) throws ParseException {
+
+        System.out.println(userRepository.findAll());
+
         System.out.println(products);
 
         LocalDateTime dateTime = LocalDateTime.now();
@@ -109,7 +112,7 @@ public class ControladorToysAndShare {
         Products products1 = new Products(products.getId(), products.getProductName(), products.getPrice(), products.getProductLocation(), products.getProductDescription(), date, products.getImageLink(), products.getUsuaris());
         System.out.println(products1);
         Products p = serveisProduct.set(products1);
-        return new ResponseEntity<Products>(p, HttpStatus.CREATED);
+        return new ResponseEntity<>(p, HttpStatus.CREATED);
     }
 
     @PutMapping("/products")

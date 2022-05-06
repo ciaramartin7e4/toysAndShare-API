@@ -37,10 +37,9 @@ public class UsuariConsultaDTO {
     private Date dateCreated;
     private String description;
     private int id;
-//    private List<Products> products;
     private String profileImage;
-
-
+    String password;
+    int lastLogin;
 
 //    private Usuaris usuaris;
 }
