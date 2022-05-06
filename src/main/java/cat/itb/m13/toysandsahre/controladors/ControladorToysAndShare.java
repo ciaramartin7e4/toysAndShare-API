@@ -115,6 +115,20 @@ public class ControladorToysAndShare {
         return new ResponseEntity<>(p, HttpStatus.CREATED);
     }
 
+    @PostMapping("/users/{id}/products")
+    public ResponseEntity<Products> createProducts(@PathVariable(value = "id") int id, @RequestBody Products commentRequest) {
+        Products comment = userRepository.findById(id).map(usuari -> {
+            commentRequest.setUsuaris(usuari);
+            LocalDateTime dateTime = LocalDateTime.now();
+            Date date = java.sql.Timestamp.valueOf(dateTime);
+            Products products1 = new Products(commentRequest.getId(), commentRequest.getProductName(), commentRequest.getPrice(), commentRequest.getProductLocation(),
+                    commentRequest.getProductDescription(), date, commentRequest.getImageLink(), commentRequest.getUsuaris());
+
+            return productRepository.save(products1);
+        }).orElseThrow(() -> new ResourceNotFoundException("Not found User with id = " + id));
+        return new ResponseEntity<>(comment, HttpStatus.CREATED);
+    }
+
     @PutMapping("/products")
     public ResponseEntity<Products> updateLista(@RequestBody Products lista) {
         Products p = serveisProduct.set(lista);
