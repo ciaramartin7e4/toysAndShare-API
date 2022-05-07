@@ -12,4 +12,7 @@ public interface ProductRepository extends JpaRepository<Products, Integer> {
 
     @Transactional
     void deleteByUsuarisId(int id);
+
+    @Query(value = "SELECT p, p.usuaris.id, u FROM Products p, Usuaris u where p.id = :id and p.usuaris.id = u.id")
+    Products findProductAndUserById(int id);
 }

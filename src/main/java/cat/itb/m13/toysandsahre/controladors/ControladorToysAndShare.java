@@ -81,22 +81,19 @@ public class ControladorToysAndShare {
     }
 
     @GetMapping("/products/{id}")
-//    public ResponseEntity<Products> getListsById(@PathVariable int id){
-//       Products products = serveisProduct.getById(id);
-//       if(products == null) return ResponseEntity.notFound().build();
-//       return ResponseEntity.ok(products);
-//       Products products = productRepository.findById(id)
-//               .orElseThrow(() -> new ResourceNotFoundException("Not found Products with id = " + id));
-    public ResponseEntity<Products> getProductsById(@PathVariable(value = "id") int id) {
-        Products prod = productRepository.findById(id).map(product -> {
-            product.setUsuaris(product.getUsuaris());
-            Products p1 = new Products(product.getId(), product.getProductName(), product.getPrice(), product.getProductLocation(),
-                    product.getProductDescription(), product.getDateCreated(), product.getImageLink(), product.getUsuaris());
-            return p1;
-        }).orElseThrow(() -> new ResourceNotFoundException("Not found Product with id = " + id));
-        return new ResponseEntity<>(prod, HttpStatus.CREATED);
+    public ResponseEntity<Products> getListsById(@PathVariable int id){
+        Products products = serveisProduct.getById(id);
+        if(products == null) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(products);
     }
-//    }
+
+    @GetMapping("/UserAndProduct/{id}")
+    public ResponseEntity<Products> getProductsAndUserById(@PathVariable int id){
+        Products products = productRepository.findProductAndUserById(id);
+        System.out.println(products);
+        if(products == null) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(products);
+    }
 
     @PostMapping("/users/{id}/products")
     public ResponseEntity<Products> createProducts(@PathVariable(value = "id") int id, @RequestBody Products commentRequest) {
