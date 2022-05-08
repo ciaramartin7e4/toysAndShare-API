@@ -81,10 +81,16 @@ public class ControladorToysAndShare {
     }
 
     @GetMapping("/products/{id}")
-    public ResponseEntity<Products> getListsById(@PathVariable int id){
+    public ResponseEntity<?> getListsById(@PathVariable int id){
         Products products = serveisProduct.getById(id);
-        if(products == null) return ResponseEntity.notFound().build();
-        return ResponseEntity.ok(products);
+        System.out.println("El producto: "+products);
+        System.out.println("El producto con el ususario: "+products.getUsuaris());
+        Products p = new Products(products.getId(), products.getProductName(), products.getPrice(), products.getProductLocation(), products.getProductDescription(), products.getDateCreated(), products.getImageLink(), products.getUsuaris());
+        System.out.println(p);
+        if(p == null) return ResponseEntity.notFound().build();
+//        ResponseEntity<?> newResponse = p.getUsuaris();
+        System.out.println(ResponseEntity.ok(p));
+        return ResponseEntity.ok(p);
     }
 
     @GetMapping("/UserAndProduct/{id}")

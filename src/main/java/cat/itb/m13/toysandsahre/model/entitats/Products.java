@@ -1,11 +1,9 @@
 package cat.itb.m13.toysandsahre.model.entitats;
 
-import cat.itb.m13.toysandsahre.model.repositoris.UserRepository;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-//import org.graalvm.compiler.lir.LIRInstruction;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -36,6 +34,10 @@ public class Products {
     @JsonIgnore
     private Usuaris usuaris;
 
+    public Products() {
+        super();
+    }
+
     public Products(int id, String productName, Double price, String productLocation, String productDescription, Date dateCreated, String imageLink, Usuaris usuaris) {
         this.id = id;
         this.productName = productName;
@@ -45,11 +47,6 @@ public class Products {
         this.dateCreated = dateCreated;
         this.imageLink = imageLink;
         this.usuaris = usuaris;
-    }
-
-
-    public Products() {
-        super();
     }
 
     //    Getters
