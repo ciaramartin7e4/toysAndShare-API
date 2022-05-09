@@ -1,5 +1,6 @@
 package cat.itb.m13.toysandsahre.controladors;
 
+import cat.itb.m13.toysandsahre.model.entitats.ProductoDTO;
 import cat.itb.m13.toysandsahre.model.entitats.Products;
 import cat.itb.m13.toysandsahre.model.entitats.Usuaris;
 //import cat.itb.m13.toysandsahre.model.repositoris.ServeisGoogle;
@@ -85,12 +86,16 @@ public class ControladorToysAndShare {
         Products products = serveisProduct.getById(id);
         System.out.println("El producto: "+products);
         System.out.println("El producto con el ususario: "+products.getUsuaris());
-        Products p = new Products(products.getId(), products.getProductName(), products.getPrice(), products.getProductLocation(), products.getProductDescription(), products.getDateCreated(), products.getImageLink(), products.getUsuaris());
+        ProductoDTO p = new ProductoDTO(products.getId(), products.getProductName(), products.getPrice(), products.getProductLocation(), products.getProductDescription(), products.getDateCreated(), products.getImageLink(), products.getUsuaris().getId());
         System.out.println(p);
-        if(p == null) return ResponseEntity.notFound().build();
-//        ResponseEntity<?> newResponse = p.getUsuaris();
-        System.out.println(ResponseEntity.ok(p));
-        return ResponseEntity.ok(p);
+
+        if(p == null){
+            return ResponseEntity.notFound().build();}
+        else{
+            //        ResponseEntity<?> newResponse = p.getUsuaris();
+            System.out.println(ResponseEntity.ok(p));
+            return ResponseEntity.ok(p);
+        }
     }
 
     @GetMapping("/UserAndProduct/{id}")
