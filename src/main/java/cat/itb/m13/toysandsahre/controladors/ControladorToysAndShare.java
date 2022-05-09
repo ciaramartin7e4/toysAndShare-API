@@ -88,18 +88,10 @@ public class ControladorToysAndShare {
         System.out.println("El producto con el ususario: "+products.getUsuaris());
         ProductoDTO p = new ProductoDTO(products.getId(), products.getProductName(), products.getPrice(), products.getProductLocation(), products.getProductDescription(), products.getDateCreated(), products.getImageLink(), products.getUsuaris().getId());
         System.out.println(p);
-<<<<<<< HEAD
-
-        if(p == null){
-            return ResponseEntity.notFound().build();}
-        else{
-            //        ResponseEntity<?> newResponse = p.getUsuaris();
-=======
         if(p == null){
             return ResponseEntity.notFound().build();
         } else {
     //        ResponseEntity<?> newResponse = p.getUsuaris();
->>>>>>> 2880763ad5986c080f17f05d8a8dedac489a9156
             System.out.println(ResponseEntity.ok(p));
             return ResponseEntity.ok(p);
         }
