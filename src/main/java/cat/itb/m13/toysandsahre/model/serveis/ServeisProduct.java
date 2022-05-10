@@ -1,11 +1,13 @@
 package cat.itb.m13.toysandsahre.model.serveis;
 
 
+import cat.itb.m13.toysandsahre.model.entitats.ProductoDTO;
 import cat.itb.m13.toysandsahre.model.entitats.Products;
 import cat.itb.m13.toysandsahre.model.repositoris.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service

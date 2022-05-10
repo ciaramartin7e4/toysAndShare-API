@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -77,8 +78,13 @@ public class ControladorToysAndShare {
 
     //PRODUCTS
     @GetMapping("/products")
-    public ResponseEntity<List<Products>> getLists() {
-        return ResponseEntity.ok(serveisProduct.getProducts());
+    public ResponseEntity<List<ProductoDTO>> getLists() {
+        List<Products> aux = productRepository.findAll();
+        List<ProductoDTO> aux2 = new ArrayList<>();
+        for (Products p : aux){
+            aux2.add(new ProductoDTO(p.getId(), p.getProductName(), p.getPrice(), p.getProductLocation(), p.getProductDescription(), p.getDateCreated(), p.getImageLink(), p.getUsuaris().getId()));
+        }
+        return ResponseEntity.ok(aux2);
     }
 
     @GetMapping("/products/{id}")
