@@ -13,6 +13,7 @@ import org.apache.velocity.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
@@ -33,6 +34,7 @@ public class ControladorToysAndShare {
     UserRepository userRepository;
     @Autowired
     ProductRepository productRepository;
+    private final PasswordEncoder xifrat;
 
     // USER
     @GetMapping("/users")
@@ -60,7 +62,7 @@ public class ControladorToysAndShare {
     public ResponseEntity<Usuaris> postUser(@RequestBody Usuaris user) throws ParseException {
         LocalDateTime dateTime = LocalDateTime.now();
         Date date = java.sql.Timestamp.valueOf(dateTime);
-        Usuaris newUser = new Usuaris(user.getId(), user.getName(), user.getLastname(), user.getEmail(), user.getPassword(), user.getAddress(), user.getCity(), user.getCountry(), user.getPhone(), user.getPostalCode(),date, user.getLastLogin(), user.getStatus(), user.getDescription(), user.getProfileImage());
+        Usuaris newUser = new Usuaris(user.getId(), user.getName(), user.getLastname(), user.getEmail(), xifrat.encode(user.getPassword()), user.getAddress(), user.getCity(), user.getCountry(), user.getPhone(), user.getPostalCode(),date, user.getLastLogin(), user.getStatus(), user.getDescription(), user.getProfileImage());
         Usuaris u = serveisUser.set(newUser);
         return new ResponseEntity<Usuaris>(u, HttpStatus.CREATED);
     }
