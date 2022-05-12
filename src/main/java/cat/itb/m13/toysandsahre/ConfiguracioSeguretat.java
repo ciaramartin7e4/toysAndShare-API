@@ -4,6 +4,7 @@ import cat.itb.m13.toysandsahre.model.serveis.ElMeuUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -37,13 +38,14 @@ public class ConfiguracioSeguretat extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
 //per poder accedir al h2-console
-                //  .authorizeRequests().antMatchers("/").permitAll().and()
+//                  .authorizeRequests().antMatchers("/").permitAll().and()
                 //  .authorizeRequests().antMatchers("/h2-console/**").permitAll()
                 // .and()
                 .csrf().disable()
                 // .headers().frameOptions().disable()
                 // .and()
                 .authorizeRequests()
+                .antMatchers(HttpMethod.POST, "/users/**").permitAll()
                 .anyRequest().authenticated();
     }
 

@@ -58,9 +58,9 @@ public class ControladorToysAndShare {
 
     @PostMapping("/users")
     public ResponseEntity<Usuaris> postUser(@RequestBody Usuaris user) throws ParseException {
-        String sDate1 = String.valueOf(user.getDateCreated());
-        Date date1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX").parse(sDate1);
-        Usuaris newUser = new Usuaris(user.getId(), user.getName(), user.getLastname(), user.getEmail(), user.getPassword(), user.getAddress(), user.getCity(), user.getCountry(), user.getPhone(), user.getPostalCode(),date1, user.getLastLogin(), user.getStatus(), user.getDescription(), user.getProfileImage());
+        LocalDateTime dateTime = LocalDateTime.now();
+        Date date = java.sql.Timestamp.valueOf(dateTime);
+        Usuaris newUser = new Usuaris(user.getId(), user.getName(), user.getLastname(), user.getEmail(), user.getPassword(), user.getAddress(), user.getCity(), user.getCountry(), user.getPhone(), user.getPostalCode(),date, user.getLastLogin(), user.getStatus(), user.getDescription(), user.getProfileImage());
         Usuaris u = serveisUser.set(newUser);
         return new ResponseEntity<Usuaris>(u, HttpStatus.CREATED);
     }
