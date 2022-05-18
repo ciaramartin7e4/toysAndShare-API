@@ -17,12 +17,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -59,12 +57,12 @@ public class ControladorToysAndShare {
     }
 
     @PostMapping("/users")
-    public ResponseEntity<Usuaris> postUser(@RequestBody Usuaris user) throws ParseException {
+    public ResponseEntity<Usuaris> postUser(@RequestBody Usuaris user) {
         LocalDateTime dateTime = LocalDateTime.now();
         Date date = java.sql.Timestamp.valueOf(dateTime);
         Usuaris newUser = new Usuaris(user.getId(), user.getName(), user.getLastname(), user.getEmail(), xifrat.encode(user.getPassword()), user.getAddress(), user.getCity(), user.getCountry(), user.getPhone(), user.getPostalCode(),date, user.getLastLogin(), user.getStatus(), user.getDescription(), user.getProfileImage());
         Usuaris u = serveisUser.set(newUser);
-        return new ResponseEntity<Usuaris>(u, HttpStatus.CREATED);
+        return new ResponseEntity<>(u, HttpStatus.CREATED);
     }
 
     @PutMapping("/users")
@@ -96,13 +94,9 @@ public class ControladorToysAndShare {
         System.out.println("El producto con el ususario: "+products.getUsuaris());
         ProductoDTO p = new ProductoDTO(products.getId(), products.getProductName(), products.getPrice(), products.getProductLocation(), products.getProductDescription(), products.getDateCreated(), products.getImageLink(), products.getUsuaris().getId());
         System.out.println(p);
-        if(p == null){
-            return ResponseEntity.notFound().build();
-        } else {
-    //        ResponseEntity<?> newResponse = p.getUsuaris();
-            System.out.println(ResponseEntity.ok(p));
-            return ResponseEntity.ok(p);
-        }
+        //        ResponseEntity<?> newResponse = p.getUsuaris();
+        System.out.println(ResponseEntity.ok(p));
+        return ResponseEntity.ok(p);
     }
 
     @GetMapping("/UserAndProduct/{id}")
@@ -127,10 +121,18 @@ public class ControladorToysAndShare {
         return new ResponseEntity<>(comment, HttpStatus.CREATED);
     }
 
-    @PutMapping("/products")
-    public ResponseEntity<Products> updateLista(@RequestBody Products lista) {
-        Products p = serveisProduct.set(lista);
-        return ResponseEntity.ok(p);
+    @PutMapping("/users/{id}/products")
+    public ResponseEntity<Products> updateProduct(@PathVariable(value = "id") int id, @RequestBody Products product) {
+        Products p = userRepository.findById(id).map(usuari -> {
+            product.setUsuaris(usuari);
+            LocalDateTime dateTime = LocalDateTime.now();
+            Date date = java.sql.Timestamp.valueOf(dateTime);
+            Products productToUpload = new Products(product.getId(), product.getProductName(), product.getPrice(), product.getProductLocation(),
+                    product.getProductDescription(), date, product.getImageLink(), product.getUsuaris());
+
+            return productRepository.save(productToUpload);
+        }).orElseThrow(() -> new ResourceNotFoundException("Not found User with id = " + id));
+        return new ResponseEntity<>(p, HttpStatus.ACCEPTED);
     }
     @DeleteMapping("/products/{id}")
     public ResponseEntity<Integer> deleteList(@PathVariable int id) {
